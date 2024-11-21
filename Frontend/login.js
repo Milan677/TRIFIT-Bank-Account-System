@@ -1,6 +1,7 @@
 const login_btn = document.getElementById("login-btn");
 const username = document.getElementById("username");
 const pin = document.getElementById("Pin");
+const attempts=document.getElementById("attempts");
 
 login_btn.addEventListener("click", async (e) => {
     e.preventDefault();
@@ -30,7 +31,9 @@ login_btn.addEventListener("click", async (e) => {
 
         // Handle various response messages
         if(res.message=='Pin should be of 4 digits'){
+            attempts.innerText=3-res.user.failedAttempts;
             Swal.fire("Invalid!", "Pin should be of 4 digits", "warning");
+            
         }
         if (res.message === "User not found") {
             Swal.fire({
@@ -45,8 +48,11 @@ login_btn.addEventListener("click", async (e) => {
                 text: "Account is locked. Try again later!",
             });
         } else if (res.message === "Invalid credentials") {
+            attempts.innerText=3-res.user.failedAttempts;
             Swal.fire("Invalid!", "Please enter a valid pin.", "warning");
+            
         } else if (res.message === "Login successful") {
+            attempts.innerText=3;
             localStorage.setItem("token", res.token);
             document.cookie=`token=${res.token}`;
             console.log(res);
