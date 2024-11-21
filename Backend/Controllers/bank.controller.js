@@ -1,0 +1,153 @@
+const {userModel} = require('../Models/user.model');
+const {transactionModel} = require('../Models/transaction.model');
+const bcrypt=require("bcrypt");
+
+// Deposite 
+const deposit = async (req, res) => {
+    const { username, pin, amount } = req.body;
+  
+    try {
+      const user = await userModel.findOne({ username });
+      if (!user) return res.status(404).json({ message: 'User not found' });
+
+      if(user.isLogedIn==false) return res.status(401).json({message:"Please Login !"})
+  
+      if (user.lockUntil && user.lockUntil > Date.now()) {
+        return res.status(403).json({ message: 'Account is locked.' });
+      }
+  
+      const isMatch=await bcrypt.compare(pin,user.pin);
+      if (!isMatch) return res.status(401).json({ message: 'Invalid PIN' });
+  
+      user.balance += amount;
+      await user.save();
+  
+      const transaction = new transactionModel({
+        userId: user._id,
+        type: 'deposit',
+        amount,
+        balanceAfter: user.balance,
+        sender:user.username,
+        recipient:user.username
+      });
+      await transaction.save();
+  
+      res.status(200).json({ message: 'Deposit successful', balance: user.balance });
+    } catch (error) {
+      res.status(500).json({ message: 'Error processing deposit', error });
+    }
+  };
+
+  //Withdrawl
+
+  const withdraw = async (req, res) => {
+    const { username, pin, amount } = req.body;
+  
+    try {
+      const user = await userModel.findOne({ username });
+      if (!user) return res.status(404).json({ message: 'User not found' });
+      if(user.isLogedIn==false) return res.status(401).json({message:"Please Login !"})
+  
+      if (user.lockUntil && user.lockUntil > Date.now()) {
+        return res.status(403).json({ message: 'Account is locked.' });
+      }
+  
+      const isMatch=await bcrypt.compare(pin,user.pin);
+      if (!isMatch) return res.status(401).json({ message: 'Invalid PIN' });
+  
+      if (user.balance < amount) {
+        return res.status(400).json({ message: 'Insufficient balance' });
+      }
+  
+      user.balance -= amount;
+      await user.save();
+  
+      const transaction = new transactionModel({
+        userId: user._id,
+        type: 'withdrawal',
+        amount,
+        balanceAfter: user.balance,
+      });
+      await transaction.save();
+  
+      res.status(200).json({ message: 'Withdrawal successful', balance: user.balance });
+    } catch (error) {
+      res.status(500).json({ message: 'Error processing withdrawal', error });
+    }
+  };
+
+  // transfer money
+  const transfer = async (req, res) => {
+    const { senderUsername, pin, recipientUsername, amount } = req.body;
+    console.log(senderUsername,recipientUsername)
+  
+    try {
+      const sender = await userModel.findOne({ username: senderUsername });
+      const recipient = await userModel.findOne({ username: recipientUsername });
+  
+      if (!sender || !recipient) return res.status(404).json({ message: 'Invalid users' });
+      if(sender.isLogedIn==false) return res.status(401).json({message:"Please Login !"})
+  
+      if (sender.lockUntil && sender.lockUntil > Date.now()) {
+        return res.status(403).json({ message: 'Sender account is locked.' });
+      }
+  
+      
+      const isMatch=await bcrypt.compare(pin,sender.pin);
+      if (!isMatch) return res.status(401).json({ message: 'Invalid PIN' });
+  
+      if (sender.balance < amount) {
+        return res.status(400).json({ message: 'Insufficient balance' });
+      }
+  
+      sender.balance -= amount;
+      recipient.balance += amount;
+  
+      await sender.save();
+      await recipient.save();
+  
+      const senderTransaction = new transactionModel({
+        userId: sender._id,
+        type: 'transfer',
+        amount: -amount,
+        balanceAfter: sender.balance,
+        sender:sender.username,
+        recipient: recipient.username,
+      });
+      await senderTransaction.save();
+  
+      const recipientTransaction = new transactionModel({
+        userId: recipient._id,
+        type: 'transfer',
+        amount,
+        balanceAfter: recipient.balance,
+        sender: sender.username,
+        recipient:recipient.username
+      });
+      await recipientTransaction.save();
+  
+      res.status(200).json({ message: 'Transfer successful' });
+    } catch (error) {
+      res.status(500).json({ message: 'Error processing transfer', error:error.message });
+    }
+  };
+
+  // transaction details
+  const getAccountStatement = async (req, res) => {
+    const userId = req.user.id;
+  
+    try {
+      const transactions = await transactionModel.find({ userId }).sort({ date: -1 });
+  
+      if (!transactions.length) {
+        return res.status(404).json({ message: 'No transactions found' });
+      }
+  
+      res.status(200).json({ transactions });
+    } catch (error) {
+      res.status(500).json({ message: 'Error retrieving statement',err:error.message});
+      console.log(error);
+    }
+} 
+
+module.exports={deposit,withdraw,transfer,getAccountStatement}
