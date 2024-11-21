@@ -21,11 +21,12 @@ login_btn.addEventListener("click", async (e) => {
         });
 
         // Check for non-200 HTTP status codes
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //     throw new Error(`HTTP error! Status: ${response.status}`);
+        // }
 
         const res = await response.json();
+        console.log(res.message)
 
         // Handle various response messages
         if(res.message=='Pin should be of 4 digits'){
