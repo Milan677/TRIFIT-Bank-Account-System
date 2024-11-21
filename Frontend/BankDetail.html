@@ -121,6 +121,11 @@
 <body>
     <div id="Container">
         <h1>Bank Details page</h1>
+        <div id="User-details">
+            <h2>User name : <span id="u-name"></span></h2>
+            <h2>User account number : <span id="u-account"></span></h2>
+            <h2>Bank balance : Rs <span id="u-balance"></span></h2>
+        </div>
         <div class="nav">
             <h2><a href="#deposit">Deposit</a></h2>
             <h2><a href="#Withdraw">Withdraw</a></h2>
@@ -133,8 +138,8 @@
             
             <form action="#">
                 <h2>Money deposit form</h2>
-                <label for="usernane">UserName:</label>
-                <input type="text" id="username" name="username" required />
+                <label for="accountNumber">AccountNumber:</label>
+                <input type="text" id="accountNumber" name="accountNumber" required />
     
                 <label for="Pin">Pin:</label>
                 <input type="text" id="Pin" name="Pin" required />
@@ -155,8 +160,8 @@
             
             <form action="#">
                 <h2>Money Withdraw Form</h2>
-                <label for="usernane">UserName:</label>
-                <input type="text" id="w-username" name="w-username" required />
+                <label for="w-accountNumber">AccountNumber:</label>
+                <input type="text" id="w-accountNumber" name="w-accountNumber" required />
     
                 <label for="Pin">Pin:</label>
                 <input type="text" id="w-Pin" name="w-Pin" required />
@@ -175,13 +180,13 @@
 
             <form action="#">
                 <h2>Money transfer form</h2>
-                <label for="sender">UserName Of Sender:</label>
+                <label for="sender">AccountNumber Of Sender:</label>
                 <input type="text" id="sender" name="sender" required />
     
                 <label for="sender-pin">Pin Of Sender:</label>
                 <input type="text" id="sender-Pin" name="sender-Pin" required />
 
-                <label for="Reciever">UserName Of Reciever:</label>
+                <label for="Reciever">AccountNumber Of Reciever:</label>
                 <input type="text" id="Reciever" name="Reciever" required />
 
                 <label for="t-amount">Amount:</label>

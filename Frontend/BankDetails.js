@@ -1,11 +1,11 @@
 const deposit_btn=document.getElementById("deposit-btn");
-const username=document.getElementById("username");
+const accountNumber=document.getElementById("accountNumber");
 const pin=document.getElementById("Pin");
 const amount=document.getElementById("amount")
 
 //.........Withdraw elements................
 const Withdraw_btn=document.getElementById("Withdraw-btn");
-const w_username=document.getElementById("w-username");
+const w_accountNumber=document.getElementById("w-accountNumber");
 const w_pin=document.getElementById("w-Pin");
 const w_amount=document.getElementById("w-amount");
 
@@ -19,12 +19,44 @@ const t_amount=document.getElementById("t-amount");
 //..........Logout.................
 const logout_btn=document.getElementById("logout-btn");
 
+//fetch user account details
+async function fetchUser(){
+     try {
+        const response = await fetch("https://trifit-bank-account-system.onrender.com/user/user-details", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        });
+
+        // Check if the response is successful
+        if (!response.ok) {
+            throw new Error("Failed to fetch user details");
+        }
+
+        const res = await response.json();
+        console.log(res.user)
+
+
+        document.getElementById("u-name").innerText=res.user.username;
+        document.getElementById("u-account").innerText=res.user.accountNumber;
+        document.getElementById("u-balance").innerText=res.user.balance;
+
+     } catch (error) {
+        console.log(error)
+     }
+}
+
+fetchUser();
+
+
 
 deposit_btn.addEventListener("click",async(e)=>{
     e.preventDefault();
 
     const payload={
-       username:username.value ,
+       accountNumber:accountNumber.value ,
        pin:pin.value ,
        amount:+amount.value
     }
@@ -65,6 +97,9 @@ deposit_btn.addEventListener("click",async(e)=>{
         if(res.message=='Invalid PIN'){
             swal.fire("Invalid !", "Pls enter a valid pin", "warning");
         }
+        if(res.message=='Deposit amount cannot be negative.Please enter a valid amount'){
+            swal.fire("Invalid !", 'Deposit amount cannot be negative.Please enter a valid amount !', "warning");
+        }
 
         if(res.message=='Deposit successful'){
             Swal.fire({
@@ -74,6 +109,7 @@ deposit_btn.addEventListener("click",async(e)=>{
                 showConfirmButton: false,
                 timer: 1500
               });
+              fetchUser()
         }
 
     } catch (error) {
@@ -86,7 +122,7 @@ Withdraw_btn.addEventListener("click",async(e)=>{
     e.preventDefault();
 
     const payload={
-        username:w_username.value,
+        accountNumber:w_accountNumber.value,
         pin:w_pin.value,
         amount:+w_amount.value
     }
@@ -133,6 +169,9 @@ Withdraw_btn.addEventListener("click",async(e)=>{
                 icon: "question"
               });
         }
+        if(res.message=='Withdrawl amount cannot be negative.Please enter a valid amount'){
+            swal.fire("Invalid !", 'Withdrawl amount cannot be negative.Please enter a valid amount !', "warning");
+        }
 
         if(res.message=='Withdrawal successful'){
             Swal.fire({
@@ -142,6 +181,7 @@ Withdraw_btn.addEventListener("click",async(e)=>{
                 showConfirmButton: false,
                 timer: 1500
               });
+              fetchUser();
         }
     } catch (error) {
         console.log(error);
@@ -153,11 +193,12 @@ Withdraw_btn.addEventListener("click",async(e)=>{
 transfer_btn.addEventListener("click",async(e)=>{
     e.preventDefault();
     const payload={
-        senderUsername:sender.value,
+        senderAccountNumber:sender.value,
         pin:sender_pin.value,
-        recipientUsername:recipient.value,
+        recipientAccountNumber:recipient.value,
         amount:+t_amount.value
     }
+    console.log(payload)
 
     try {
         const response = await fetch("https://trifit-bank-account-system.onrender.com/user/transfer", {
@@ -171,6 +212,7 @@ transfer_btn.addEventListener("click",async(e)=>{
         });
 
         const res = await response.json();
+        console.log(res)
         if(res.message=='Sender account is locked.'){
             Swal.fire({
                 icon: "error",
@@ -202,15 +244,19 @@ transfer_btn.addEventListener("click",async(e)=>{
                 icon: "question"
               });
         }
+        if(res.message=='Transaction amount cannot be negative.Please enter a valid amount'){
+            swal.fire("Invalid !",'Transaction amount cannot be negative.Please enter a valid amount' , "warning");
+        }
 
         if(res.message=='Transfer successful'){
             Swal.fire({
-                position: "top-end",
+                position: "center",
                 icon: "success",
                 title: "Transaction successful...",
                 showConfirmButton: false,
                 timer: 1500
               });
+              fetchUser();
         }
 
     } catch (error) {

@@ -30,6 +30,9 @@ registration_btn.addEventListener("click",async(e)=>{
         if(res.message=='Pin should be of 4 charecter'){
             swal("Invalid !", "PIN should be of 4 digits", "warning");
         }
+        if(res.message=='Deposit amount cannot be negative.Please enter a valid amount'){
+            swal("Invalid !",'Deposit amount cannot be negative.Please enter a valid amount' , "warning");
+        }
 
         if(res.message=='User registered successfully'){
             window.location.href="login.html"
