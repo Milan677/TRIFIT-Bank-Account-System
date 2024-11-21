@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction History</title>
+    <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        #container{
+            height:auto;
+            width:100vw;
+            background-color: bisque;
+            
+        }
+        .nav{
+            height:50px;
+            width:100vw;
+            background-color: #fff;
+            color:#4caf50 ;
+            box-shadow:0 0 20px rgba(0, 0, 0, 0.2); 
+            display: flex;
+            justify-content:space-around;
+            align-items: center;
+            
+        }
+        .nav  a{
+            text-decoration: none;
+            color: #4caf50;
+        }
+        #logout-btn{
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            padding:10px;
+            border-radius: 5px;
+        }
+        #t-box{
+            height:auto;
+            width:100%
+        }
+        .card{
+            height:auto;
+            width:100%;
+            background-color: #fff;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>Transaction history</h1>
+        <div class="nav">
+            <h2><a href="BankDetail.html">Deposit</a></h2>
+            <h2><a href="BankDetail.html">Withdraw</a></h2>
+            <h2><a href="BankDetail.html">Transfer</a></h2>
+            <h2><a href="transaction.html">Transactions</a></h2>
+            <!-- <button id="logout-btn">Logout</button> -->
+        </div>
+
+        <div id="t-box">
+            
+        </div>
+    </div>
+    <script src="transaction.js"></script>
+</body>
+</html>

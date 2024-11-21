@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank details page</title>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        html{
+            scroll-behavior: smooth;
+        }
+          body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+        }
+        #container{
+            height:100vh;
+            width:100vw;
+            border:3px solid red;
+            background-color: azure;
+        }
+    
+        .nav{
+            height:50px;
+            width:100vw;
+            background-color: #fff;
+            color:#4caf50 ;
+            box-shadow:0 0 20px rgba(0, 0, 0, 0.2); 
+            display: flex;
+            justify-content:space-around;
+            align-items: center;
+            
+        }
+        .nav  a{
+            text-decoration: none;
+            color: #4caf50;
+        }
+        #logout-btn{
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            padding:10px;
+            border-radius: 5px;
+        }
+
+        #deposit{
+            height:100vh;
+            width:100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: aqua;
+            color: #4caf50;
+        }
+        #Withdraw{
+            height:100vh;
+            width:100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(41, 90, 90);
+            color: #4caf50;
+        }
+        #transfer{
+            height:100vh;
+            width:100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(84, 181, 181);
+            color: #4caf50;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="number"],
+        select {
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            padding: 15px;
+            border-radius: 10px;
+            border: none;
+            background-color: #4caf50;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        form{
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            width: 300px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div id="Container">
+        <h1>Bank Details page</h1>
+        <div class="nav">
+            <h2><a href="#deposit">Deposit</a></h2>
+            <h2><a href="#Withdraw">Withdraw</a></h2>
+            <h2><a href="#transfer">Transfer</a></h2>
+            <h2><a href="transaction.html">Transactions</a></h2>
+            <button id="logout-btn">Logout</button>
+        </div>
+
+        <div id="deposit">
+            
+            <form action="#">
+                <h2>Money deposit form</h2>
+                <label for="usernane">UserName:</label>
+                <input type="text" id="username" name="username" required />
+    
+                <label for="Pin">Pin:</label>
+                <input type="text" id="Pin" name="Pin" required />
+
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" required />
+    
+    
+                <button type="submit" id="deposit-btn">
+                    Submit
+                </button>
+            </form>
+        </div>
+    
+        </div>
+
+        <div id="Withdraw">
+            
+            <form action="#">
+                <h2>Money Withdraw Form</h2>
+                <label for="usernane">UserName:</label>
+                <input type="text" id="w-username" name="w-username" required />
+    
+                <label for="Pin">Pin:</label>
+                <input type="text" id="w-Pin" name="w-Pin" required />
+
+                <label for="amount">Amount:</label>
+                <input type="number" id="w-amount" name="w-amount" required />
+    
+    
+                <button type="submit" id="Withdraw-btn">
+                    Submit
+                </button>
+            </form>
+        </div>
+
+        <div id="transfer">
+
+            <form action="#">
+                <h2>Money transfer form</h2>
+                <label for="sender">UserName Of Sender:</label>
+                <input type="text" id="sender" name="sender" required />
+    
+                <label for="sender-pin">Pin Of Sender:</label>
+                <input type="text" id="sender-Pin" name="sender-Pin" required />
+
+                <label for="Reciever">UserName Of Reciever:</label>
+                <input type="text" id="Reciever" name="Reciever" required />
+
+                <label for="t-amount">Amount:</label>
+                <input type="number" id="t-amount" name="t-amount" required />
+    
+    
+                <button type="submit" id="transfer-btn">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="BankDetails.js"></script>
+</body>
+</html>
