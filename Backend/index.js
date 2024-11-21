@@ -6,7 +6,7 @@ const cors=require("cors")
 const{router}=require("./Routers/user.router");
 const cookieParser = require("cookie-parser");
 
-app.use(cors({ origin: "http://127.0.0.1:5500", credentials: true, }))
+app.use(cors({ origin: "https://trifit-bankingsystem-frontend.netlify.app", credentials: true, }))
 app.use(express.json());
 
 app.get("/",(req,res)=>{
