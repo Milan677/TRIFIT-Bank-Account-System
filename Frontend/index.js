@@ -27,6 +27,10 @@ registration_btn.addEventListener("click",async(e)=>{
             swal("Invalid !", "UserName alredy exist", "warning");
         }
 
+        if(res.message=='Pin should be of 4 charecter'){
+            swal("Invalid !", "PIN should be of 4 digits", "warning");
+        }
+
         if(res.message=='User registered successfully'){
             window.location.href="login.html"
         }
