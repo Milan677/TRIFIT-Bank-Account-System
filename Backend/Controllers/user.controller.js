@@ -70,7 +70,17 @@ const login = async (req, res) => {
     }
 
     //Pin should be 4 digit
-    if(pin.length!==4) return res.status(400).json({message:'Pin should be of 4 digits'})
+    if(pin.length!==4){
+      user.failedAttempts += 1;
+      if (user.failedAttempts >= 3) {
+        user.lockUntil = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
+        await user.save();
+        return res.status(403).json({ message: 'Account locked due to too many failed attempts.' });
+     } 
+     await user.save();
+     return res.status(400).json({user,message:'Pin should be of 4 digits'})
+
+  }
 
 
 
@@ -84,7 +94,7 @@ const login = async (req, res) => {
         return res.status(403).json({ message: 'Account locked due to too many failed attempts.' });
       }
       await user.save();
-      return res.status(401).json({ message: 'Invalid credentials' });
+      return res.status(401).json({ user,message: 'Invalid credentials' });
     }
 
     // Reset failed attempts
