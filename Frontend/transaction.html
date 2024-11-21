@@ -50,6 +50,20 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
             margin-top: 10px;
         }
+        table{
+            width: 100%;
+        }
+        table,th,td,tr{
+            text-align: center;
+            border: 2px solid black;
+            border-collapse: collapse;
+        }
+        th:nth-child(odd),
+        td:nth-child(odd){
+            background-color: rgb(211, 53, 53);
+            color: #fff;
+        }
+
     </style>
 </head>
 <body>
@@ -64,7 +78,22 @@
         </div>
 
         <div id="t-box">
-            
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Type of transaction</th>
+                        <th>Amount</th>
+                        <th>Balance After Transaction</th>
+                        <th>Sender</th>
+                        <th>Recipient</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="t-body">
+
+                </tbody>
+            </table>
         </div>
     </div>
     <script src="transaction.js"></script>

@@ -26,16 +26,22 @@ const showdata = () => {
 showdata();
 
 function displaydata(data) {
-    let main = document.getElementById("t-box");
-    main.innerHTML = null;
+    let main = document.getElementById("t-body");
+    // main.innerHTML = null;
 
     if (Array.isArray(data)) {
         data.forEach((element) => {
-            main.innerHTML += `
-              <div class="card">
-                ${JSON.stringify(element)}
-              </div>
+            const row = document.createElement("tr");
+            row.innerHTML += `
+               <td>${element.userId || "N/A"}</td>
+                <td>${ element.type|| "N/A"}</td>
+                <td>${element.amount || 0}</td>
+                <td>${element.balanceAfter || 0}</td>
+                <td>${element.sender || "N/A"}</td>
+                <td>${element.recipient || "N/A"}</td>
+                <td>${new Date(element.date).toLocaleDateString() || "N/A"}</td>
             `;
+            main.appendChild(row);
         });
     } else {
         main.innerHTML = `<p>No data available</p>`;
