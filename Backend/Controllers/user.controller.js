@@ -91,7 +91,7 @@ const login = async (req, res) => {
       if (user.failedAttempts >= 3) {
         user.lockUntil = Date.now() + 24 * 60 * 60 * 1000; // 24 hours
         await user.save();
-        return res.status(403).json({ message: 'Account locked due to too many failed attempts.' });
+        return res.status(403).json({ user,message: 'Account locked due to too many failed attempts.' });
       }
       await user.save();
       return res.status(401).json({ user,message: 'Invalid credentials' });
