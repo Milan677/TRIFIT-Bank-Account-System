@@ -96,7 +96,7 @@ const transfer = async (req, res) => {
     if (recipient.lockUntil && recipient.lockUntil > Date.now()) {
       return res.status(403).json({ message: 'Recipient account is locked.' });
     }
-    if (amount < 0) return res.status(400).json({ message: 'Withdrawl amount cannot be negative.Please enter a valid amount' })
+    if (amount < 0) return res.status(400).json({ message: 'Transaction amount cannot be negative.Please enter a valid amount' })
 
 
     const isMatch = await bcrypt.compare(pin, sender.pin);
@@ -156,4 +156,9 @@ const getAccountStatement = async (req, res) => {
   }
 }
 
-module.exports = { deposit, withdraw, transfer, getAccountStatement }
+//user details
+const userdetails=async(req,res)=>{
+   res.status(200).json({user:req.user});
+}
+
+module.exports = { deposit, withdraw, transfer, getAccountStatement ,userdetails}
