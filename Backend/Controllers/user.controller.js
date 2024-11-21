@@ -69,6 +69,9 @@ const login = async (req, res) => {
       return res.status(403).json({ message: 'Account is locked. Try again later.' });
     }
 
+    //Pin should be 4 digit
+    if(pin.length!==4) return res.status(400).json({message:'Pin should be of 4 digits'})
+
 
 
     // Verify PIN
@@ -99,7 +102,7 @@ const login = async (req, res) => {
     res.cookie("token",token);
     res.cookie("refresh_token",refresh_token);
 
-    res.status(200).json({ token,refresh_token, message: 'Login successful' });
+    res.status(200).json({ user,token,refresh_token, message: 'Login successful' });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
