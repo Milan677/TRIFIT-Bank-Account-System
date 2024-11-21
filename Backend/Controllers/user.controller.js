@@ -17,6 +17,7 @@ const register = async (req, res) => {
     const existingUser = await userModel.findOne({ username });
     if (existingUser) return res.status(400).json({ message: 'Username already exists' });
     if(pin.length!==4) return res.status(400).json({message:'Pin should be of 4 charecter'})
+    if(initialDeposit<0)return res.status(400).json({message:'Deposit amount cannot be negative.Please enter a valid amount'})
 
     // Hash the PIN
     const hashedPin = await bcrypt.hash(pin, 10);
