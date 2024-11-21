@@ -28,6 +28,9 @@ login_btn.addEventListener("click", async (e) => {
         const res = await response.json();
 
         // Handle various response messages
+        if(res.message=='Pin should be of 4 digits'){
+            Swal.fire("Invalid!", "Pin should be of 4 digits", "warning");
+        }
         if (res.message === "User not found") {
             Swal.fire({
                 title: "Wrong Username?",
