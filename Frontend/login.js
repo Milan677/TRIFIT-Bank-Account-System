@@ -42,6 +42,7 @@ login_btn.addEventListener("click", async (e) => {
                 icon: "question"
             });
         } else if (res.message === "Account is locked. Try again later.") {
+            attempts.innerText=3-res.user.failedAttempts;
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
