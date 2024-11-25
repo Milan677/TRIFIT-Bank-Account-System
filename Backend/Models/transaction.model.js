@@ -4,6 +4,7 @@ const TransactionSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   type: { type: String, enum: ['deposit', 'withdrawal', 'transfer'], required: true },
   amount: { type: Number, required: true },
+  applicableFee:{type:Number,default:0},//changes
   balanceAfter: { type: Number, required: true },
   sender: { type: String, default: null }, 
   recipient: { type: String, default: null }, 

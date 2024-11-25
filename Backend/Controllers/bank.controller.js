@@ -56,18 +56,20 @@ const withdraw = async (req, res) => {
     const isMatch = await bcrypt.compare(pin, user.pin);
     if (!isMatch) return res.status(401).json({ message: 'Invalid PIN' });
     if (amount < 0) return res.status(400).json({ message: 'Withdrawl amount cannot be negative.Please enter a valid amount' })
-
-    if (user.balance < amount) {
+    // calculate applicable fee wich will be 3% of each requested amount
+    let applicableFee=Math.floor(amount*0.03);//changes
+    let totalAmount=amount+applicableFee;//changes
+    if (user.balance < totalAmount) { //changes
       return res.status(400).json({ message: 'Insufficient balance' });
     }
-
-    user.balance -= amount;
+    user.balance -= totalAmount;
     await user.save();
 
     const transaction = new transactionModel({
       userId: user._id,
       type: 'withdrawal',
       amount,
+      applicableFee,
       balanceAfter: user.balance,
     });
     await transaction.save();
@@ -102,11 +104,14 @@ const transfer = async (req, res) => {
     const isMatch = await bcrypt.compare(pin, sender.pin);
     if (!isMatch) return res.status(401).json({ message: 'Invalid PIN' });
 
-    if (sender.balance < amount) {
+     // calculate applicable fee wich will be 3% of each requested amount
+     let applicableFee=Math.floor(amount*0.03);//changes
+     let totalAmount=amount+applicableFee;//changes
+    if (sender.balance < totalAmount) {
       return res.status(400).json({ message: 'Insufficient balance' });
     }
 
-    sender.balance -= amount;
+    sender.balance -= totalAmount;
     recipient.balance += amount;
 
     await sender.save();
@@ -116,6 +121,7 @@ const transfer = async (req, res) => {
       userId: sender._id,
       type: 'transfer',
       amount: -amount,
+      applicableFee,
       balanceAfter: sender.balance,
       sender: sender.username,
       recipient: recipient.username,
