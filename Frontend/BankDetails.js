@@ -217,7 +217,15 @@ transfer_btn.addEventListener("click",async(e)=>{
             Swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: "Account is locked. Try again later.!",
+                text: "Sender's account is locked. Try again later.!",
+                
+              });
+        }
+        if(res.message=='Recipient account is locked.'){
+            Swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: "Recipient's account is locked. Try again later.!",
                 
               });
         }
