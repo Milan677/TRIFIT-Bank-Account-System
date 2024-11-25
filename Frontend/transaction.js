@@ -36,6 +36,7 @@ function displaydata(data) {
                <td>${element.userId || "N/A"}</td>
                 <td>${ element.type|| "N/A"}</td>
                 <td>${element.amount || 0}</td>
+                 <td>${element.applicableFee || 0}</td>
                 <td>${element.balanceAfter || 0}</td>
                 <td>${element.sender || "N/A"}</td>
                 <td>${element.recipient || "N/A"}</td>
