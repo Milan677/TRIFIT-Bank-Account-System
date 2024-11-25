@@ -89,7 +89,8 @@ const transfer = async (req, res) => {
     const sender = await userModel.findOne({ accountNumber: senderAccountNumber });
     const recipient = await userModel.findOne({ accountNumber: recipientAccountNumber });
 
-    if (!sender || !recipient) return res.status(404).json({ message: 'Invalid users' });
+    if (!sender) return res.status(404).json({ message: 'Invalid Sender' });
+    if (!recipient) return res.status(404).json({ message: 'Invalid Recipient' });
     if (sender.isLogedIn == false) return res.status(401).json({ message: "Please Login !" })
 
     if (sender.lockUntil && sender.lockUntil > Date.now()) {
