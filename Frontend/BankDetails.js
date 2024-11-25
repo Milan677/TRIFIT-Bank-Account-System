@@ -222,13 +222,22 @@ transfer_btn.addEventListener("click",async(e)=>{
               });
         }
 
-        if(res.message=='Invalid users'){
+        if(res.message=='Invalid Sender'){
             Swal.fire({
-                title: "Wrong userName?",
-                text: "User not found?",
+                title: "Sender's account number is wrong?",
+                text: "Sender not found?",
                 icon: "question"
               });
         }
+        if(res.message=='Invalid Recipient'){
+            Swal.fire({
+                title: "Recipient's account number is wrong?",
+                text: "Recipient not found?",
+                icon: "question"
+              });
+
+        }      
+        
 
         if(res.message=='Invalid PIN'){
             swal.fire("Invalid !", "Pls enter a valid pin", "warning");
