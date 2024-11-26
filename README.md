@@ -3,7 +3,7 @@
 [BACKEND LINK](https://trifit-bank-account-system.onrender.com)
 
 ## APIs Documentation link
-[DOCUMENTAIOn LINK](https://trifit-bank-account-system.onrender.com/api-docs)
+[DOCUMENTAION LINK](https://trifit-bank-account-system.onrender.com/api-docs)
 
 ## Overview  
 The Banking Application is a secure, user-friendly platform for managing personal banking operations. It offers a comprehensive set of features such as user registration, deposits, withdrawals, internal transfers, account statements, and account locking to ensure secure and efficient financial management.  
