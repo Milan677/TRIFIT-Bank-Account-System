@@ -2,7 +2,7 @@
 ## Backend Deployment Link
 -[BACKEND LINK](https://trifit-bank-account-system.onrender.com)
 ## Frontend Deployment Link
--[FRONTEND LINK](trifit-bankingsystem-frontend.netlify.app)
+-[FRONTEND LINK](https://trifit-bankingsystem-frontend.netlify.app)
 ## APIs Documentation Link
 -[APIs DOCUMENTAION LINK](https://trifit-bank-account-system.onrender.com/api-docs)
 
