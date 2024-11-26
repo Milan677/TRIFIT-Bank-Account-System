@@ -47,7 +47,7 @@ const withdraw = async (req, res) => {
 
   try {
     const user = await userModel.findOne({ accountNumber });
-    const Bank = await userModel.findOne({accountNumber:process.env.BankAccountNumber});
+    const Bank = await userModel.findOne({accountNumber:"BANK-5927666"});
 
     if(!Bank) return res.json({message:"Bank not found"});
 
@@ -106,7 +106,7 @@ const transfer = async (req, res) => {
   try {
     const sender = await userModel.findOne({ accountNumber: senderAccountNumber });
     const recipient = await userModel.findOne({ accountNumber: recipientAccountNumber });
-    const Bank = await userModel.findOne({accountNumber:process.env.BankAccountNumber});
+    const Bank = await userModel.findOne({accountNumber:"BANK-5927666"});
 
     if (!sender) return res.status(404).json({ message: 'Invalid Sender' });
     if (!recipient) return res.status(404).json({ message: 'Invalid Recipient' });
