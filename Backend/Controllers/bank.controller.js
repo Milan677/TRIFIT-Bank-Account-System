@@ -1,6 +1,7 @@
 const { userModel } = require('../Models/user.model');
 const { transactionModel } = require('../Models/transaction.model');
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 // Deposite 
 const deposit = async (req, res) => {
@@ -46,6 +47,8 @@ const withdraw = async (req, res) => {
 
   try {
     const user = await userModel.findOne({ accountNumber });
+    const Bank = await userModel.findOne({accountNumber:process.env.BankAccountNumber});
+
     if (!user) return res.status(404).json({ message: 'User not found' });
     if (user.isLogedIn == false) return res.status(401).json({ message: "Please Login !" })
 
@@ -65,6 +68,9 @@ const withdraw = async (req, res) => {
     user.balance -= totalAmount;
     await user.save();
 
+    Bank.balance +=applicableFee;
+    Bank.save();
+
     const transaction = new transactionModel({
       userId: user._id,
       type: 'withdrawal',
@@ -73,6 +79,16 @@ const withdraw = async (req, res) => {
       balanceAfter: user.balance,
     });
     await transaction.save();
+
+    // Bank transaction tracking
+    const BankTransaction = new transactionModel({
+      userId: Bank._id,
+      type: 'deposit',
+      amount:applicableFee,
+      balanceAfter: Bank.balance,
+      sender:user.username
+    });
+    await BankTransaction.save();
 
     res.status(200).json({ message: 'Withdrawal successful', balance: user.balance });
   } catch (error) {
@@ -88,6 +104,7 @@ const transfer = async (req, res) => {
   try {
     const sender = await userModel.findOne({ accountNumber: senderAccountNumber });
     const recipient = await userModel.findOne({ accountNumber: recipientAccountNumber });
+    const Bank = await userModel.findOne({accountNumber:process.env.BankAccountNumber});
 
     if (!sender) return res.status(404).json({ message: 'Invalid Sender' });
     if (!recipient) return res.status(404).json({ message: 'Invalid Recipient' });
@@ -114,9 +131,11 @@ const transfer = async (req, res) => {
 
     sender.balance -= totalAmount;
     recipient.balance += amount;
+    Bank.balance += applicableFee;
 
     await sender.save();
     await recipient.save();
+    await Bank.save();
 
     const senderTransaction = new transactionModel({
       userId: sender._id,
@@ -131,13 +150,23 @@ const transfer = async (req, res) => {
 
     const recipientTransaction = new transactionModel({
       userId: recipient._id,
-      type: 'transfer',
+      type: 'deposit',
       amount,
       balanceAfter: recipient.balance,
       sender: sender.username,
       recipient: recipient.username
     });
     await recipientTransaction.save();
+
+    const BankTransaction = new transactionModel({
+      userId: Bank._id,
+      type: 'deposit',
+      amount:applicableFee,
+      balanceAfter: Bank.balance,
+      sender: sender.username,
+      recipient: Bank.username
+    });
+    await BankTransaction.save();
 
     res.status(200).json({ message: 'Transfer successful' });
   } catch (error) {
