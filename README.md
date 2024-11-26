@@ -1,6 +1,9 @@
 # TRIFIT-Bank-Account-System
+## Backend Deployment Link
 -[BACKEND LINK](https://trifit-bank-account-system.onrender.com)
+## Frontend Deployment Link
 -[FRONTEND LINK](trifit-bankingsystem-frontend.netlify.app)
+## APIs Documentation Link
 -[APIs DOCUMENTAION LINK](https://trifit-bank-account-system.onrender.com/api-docs)
 
 
@@ -54,5 +57,20 @@ The Banking Application is a secure, user-friendly platform for managing persona
 - *Frontend*:  HTML-CSS-JavaScript  
 - *Authentication*: JSON Web Token (JWT)  
 - *Security*: bcryptjs for PIN hashing  
+
+## APIs Endpoints
+| Method | Endpoint      | Description           | Authentication |
+|--------|---------------|-----------------------|----------------|
+| POST   | user/register   | Register a new user   | No             |
+| POST   | user/login      | Login to the system   | No             |
+| POST   | user/deposit    | Deposit money         | Yes            |
+| POST   | user/withdraw   | Withdraw money        | Yes            |
+| POST   | user/transfer   | Transfer money        | Yes            |
+| GET    | user/statement  | View transaction history | Yes        |
+| POST   | user/logout     | Logout from the system | Yes            |
+
+## Author
+Developed by[Kamlesh Das]
+Contact[daskamlesh677@gmail.com]
 
 
