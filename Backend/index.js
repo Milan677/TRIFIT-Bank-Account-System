@@ -5,6 +5,8 @@ require("dotenv").config();
 const cors=require("cors")
 const{router}=require("./Routers/user.router");
 const cookieParser = require("cookie-parser");
+const swaggerUi=require("swagger-ui-express");
+const swaggerSpec=require("./swagger")
 
 app.use(cors({ origin: "*", credentials: true, }))
 app.use(express.json());
@@ -13,6 +15,7 @@ app.get("/",(req,res)=>{
     res.send("welcome to Banking System")
 });
 
+app.use("/api-docs",swaggerUi.serve,swaggerUi.setup(swaggerSpec));
 app.use(cookieParser());
 app.use('/user',router);
 

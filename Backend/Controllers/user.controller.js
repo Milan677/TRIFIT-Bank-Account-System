@@ -112,7 +112,7 @@ const login = async (req, res) => {
     res.cookie("token",token);
     res.cookie("refresh_token",refresh_token);
 
-    res.status(200).json({ user,token,refresh_token, message: 'Login successful' });
+    res.status(200).json({ user,token, message: 'Login successful' });
   } catch (error) {
     res.status(500).json({ message: 'Server error' });
   }
