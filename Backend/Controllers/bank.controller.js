@@ -49,6 +49,8 @@ const withdraw = async (req, res) => {
     const user = await userModel.findOne({ accountNumber });
     const Bank = await userModel.findOne({accountNumber:process.env.BankAccountNumber});
 
+    if(!Bank) return res.json({message:"Bank not found"});
+
     if (!user) return res.status(404).json({ message: 'User not found' });
     if (user.isLogedIn == false) return res.status(401).json({ message: "Please Login !" })
 
